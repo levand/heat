@@ -6,10 +6,14 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
                  [enlive "1.2.0-SNAPSHOT"] ;; from cljs-support branch of https://github.com/levand/enlive
                  ]
-  :profiles {:dev {:resource-paths ["test/resources"]}
+  :profiles {:dev {:resource-paths ["test/resources"]
+                   :dependencies [[org.clojure/test.check "0.9.0"]
+                                  [com.gfredericks/test.chuck "0.2.7"]]}
              :test {:plugins [[lein-cljsbuild "1.1.6"]
                               [lein-shell "0.4.0"]]
-                    :dependencies [[org.clojure/clojurescript "1.9.562"]]
+                    :dependencies [[org.clojure/clojurescript "1.9.562"]
+                                   [org.clojure/test.check "0.9.0"]
+                                   [com.gfredericks/test.chuck "0.2.7"]]
                     :resource-paths ["test/resources"]
                     :aliases {"test-clj" ["run" "-m" "levand.heat-test"]
                               "test-cljs" ["do" ["clean"]
