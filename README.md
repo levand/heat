@@ -20,29 +20,33 @@ succinct way to transform hiccup data into other hiccup data using
 ```clojure
 (def template [:div#foo
                 [:div.container
-                  [:span "a node"]]])
+                  [:span "foo"]]])
 
-(transform template [:#foo]
-  [:span] (content "new content"))
+(transform template [:#foo :.container]
+  [:span] (e/content "bar"))
+
+;; =>
+
+[:div.container [:span "bar"]]
 ```
+
 
 Enlive has a built in function, `net.cgrand.enlive/html` to convert from
  Hiccup-shaped data structures to Enlive-shaped data.
 
 This library provides a function to perform the inverse operation,
 transforming Enlive data to the Hiccup shape: `levand.heat/hiccup`.
+For example:
 
 ```clojure
 
 (hiccup {:tag :div,
-         :attrs {:id "foo"},
-         :content [{:tag :div,
-                    :attrs {:class "container"},
-                    :content [{:tag :span, :attrs {}, :content ["a node"]}]}]})
+         :attrs {:class "container"},
+         :content [{:tag :span, :attrs {}, :content ["bar"]}]})
 
-;; yeilds:
+;; =>
 
-[:div#foo [:div.container [:span "a node"]]]
+[:div.container [:span "bar"]]
 ```
 
 ## License

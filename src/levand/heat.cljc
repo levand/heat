@@ -42,10 +42,10 @@
 
      (def template [:div#foo
                      [:div.container
-                       [:span \"a node\"]]])
+                       [:span \"foo\"]]])
 
-     (transform template [:#foo]
-        [:span] (content \"new content\"))
+     (transform template [:#foo :.container]
+        [:span] (e/content \"bar\"))
 
 
    Note that for performance reasons, the `template` expression is resolved
@@ -61,3 +61,28 @@
        (first (hiccup
                 (e/at ~cache-symbol
                   ~@transformations))))))
+
+(comment
+
+  (def template [:div#foo
+                 [:div.container
+                  [:span "foo"]]])
+
+  (transform template [:#foo :.container]
+    [:span] (e/content "bar"))
+
+  ;; =>
+
+  (e/html [:div.container [:span "bar"]])
+
+  (hiccup {:tag :div,
+           :attrs {:class "container"},
+           :content [{:tag :span, :attrs {}, :content ["bar"]}]})
+
+  ;; =>
+
+  [:div.container [:span "bar"]]
+
+
+
+  )
