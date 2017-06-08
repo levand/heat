@@ -1,0 +1,22 @@
+
+(def fruitlist
+  [:div.fruits
+   [:table
+    [:thead [:tr [:th "Name"] [:th "Weight"]]]
+    [:tbody
+     [:tr [:td "Lemon"] [:td "2lbs"]]]]])
+
+
+(my/rumsnippet Snippet fruitlist [:tbody :> first-child] < [:rum/component]
+  [fruit quantity send version]
+  {[:tr :> first-child] (content fruit)
+   [:tr :> last-child] (content (str quantity))}) ;; => A Rum-friendly component
+
+
+
+;; Hiccup data -> Enlive data -> Enlive transform -> Enlive data -> Sablono -> Return from Rum Component
+;;
+;; Work Points:
+;; 1. Hiccup data -> Enlive data (pure transform)
+;; 2. Enlive data -> Sablono data (pure transform)
+;; 3. API (macro + helper fns)
