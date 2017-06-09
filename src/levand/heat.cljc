@@ -15,12 +15,12 @@
 (defn- hiccup-node
   "Convert a single Enlive node to its Hiccup equivalent"
   [node]
-  (if (string? node)
-    node
+  (if (map? node)
     (let [attrs (-> node :attrs (dissoc :id :class))
           name (hiccup-name node)]
       (into (if (empty? attrs) [name] [name attrs])
-        (map hiccup-node (:content node))))))
+        (map hiccup-node (:content node))))
+    node))
 
 (defn hiccup
   "Given an Enlive data structure, return the equivalent Hiccup data structure."
